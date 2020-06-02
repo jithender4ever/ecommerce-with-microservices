@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/requestValidationError";
+import { User } from "../models/user";
+import { BadRequestError } from "../errors/badRequestError";
 
 const router = express.Router();
 
@@ -13,15 +15,29 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must be between 4 and 20 characters"),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
 
     const { email, password } = req.body;
-    throw new Error("Something went wrong in DB");
-    return res.send("Signup Router");
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      console.log("Email already exists!", existingUser.email);
+      throw new BadRequestError("Email already exists!");
+    }
+
+    const user = User.build({
+      email,
+      password,
+    });
+
+    await user.save();
+
+    res.status(201).send(user);
   }
 );
 
