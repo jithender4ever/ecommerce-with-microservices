@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+import { BadRequestError } from "../errors/badRequestError";
 import { RequestValidationError } from "../errors/requestValidationError";
 import { User } from "../models/user";
-import { BadRequestError } from "../errors/badRequestError";
+
+import { JWT_SECRET } from "../config";
 
 const router = express.Router();
 
@@ -35,6 +38,19 @@ router.post(
     });
 
     await user.save();
+
+    // Generate JWT and save it to the session object on cookie
+    const userJwt = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      JWT_SECRET // Need to be a secret and not a plain text. But since this app is only being run locally, did not make it a k8s secret.
+    );
+
+    req.session = {
+      jwt: userJwt,
+    };
 
     res.status(201).send(user);
   }
