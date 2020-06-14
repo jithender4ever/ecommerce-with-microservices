@@ -45,7 +45,7 @@ router.post(
         id: user.id,
         email: user.email,
       },
-      JWT_SECRET // Need to be a secret and not a plain text. But since this app is only being run locally, did not make it a k8s secret.
+      JWT_SECRET
     );
 
     req.session = {
