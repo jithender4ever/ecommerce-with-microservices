@@ -6,11 +6,12 @@ import { validateRequest } from "../middlewares/validateRequest";
 import { Password } from "../utils/password";
 import { JWT_SECRET } from "../config";
 import jwt from "jsonwebtoken";
+import { SIGNIN_ROUTE } from "./constants";
 
 const router = express.Router();
 
 router.post(
-  "/api/users/signin",
+  SIGNIN_ROUTE,
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password").trim().notEmpty().withMessage("Password cannot be empty"),

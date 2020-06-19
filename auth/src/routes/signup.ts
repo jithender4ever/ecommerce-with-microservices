@@ -7,11 +7,11 @@ import { User } from "../models/user";
 
 import { JWT_SECRET } from "../config";
 import { validateRequest } from "../middlewares/validateRequest";
-
+import { SIGNUP_ROUTE } from "./constants";
 const router = express.Router();
 
 router.post(
-  "/api/users/signup",
+  SIGNUP_ROUTE,
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")

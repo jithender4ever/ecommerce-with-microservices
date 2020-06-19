@@ -7,6 +7,10 @@
 - Uses `express-async-errors` to handle errors in case of `asynchronous` requests. This will alleviate the developers from having to call `next()` function to handle errors in case of async requests.
 - Uses `mongodb` and runs the db locally.
 
+### Tests
+
+- Uses `Jest` as test runner. For `ts` support, uses `ts-jest` library.
+
 ## Interesting Patterns/Concepts
 
 ### Error Handling
