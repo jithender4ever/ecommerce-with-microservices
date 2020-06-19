@@ -1,13 +1,12 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
-import { BadRequestError } from "../errors/badRequestError";
-import { RequestValidationError } from "../errors/requestValidationError";
-import { User } from "../models/user";
-
 import { JWT_SECRET } from "../config";
+import { BadRequestError } from "../errors/badRequestError";
 import { validateRequest } from "../middlewares/validateRequest";
+import { User } from "../models/user";
 import { SIGNUP_ROUTE } from "./constants";
+
 const router = express.Router();
 
 router.post(
