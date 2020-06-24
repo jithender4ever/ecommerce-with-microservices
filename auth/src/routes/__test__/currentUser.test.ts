@@ -1,20 +1,11 @@
 import request from "supertest";
+import { getCookie } from "../../test/setup";
 import { app } from "../../app";
 import { SIGNUP_ROUTE, SIGNIN_ROUTE, CURRENTUSER_ROUTE } from "../constants";
 
 describe("current-user tests", () => {
   it("returns current user details when a user exists", async () => {
-    const signupResponse = await request(app)
-      .post(SIGNUP_ROUTE)
-      .send({
-        email: "test@test.com",
-        password: "123456",
-      })
-      .expect(201);
-
-    // Get the jwt from the response header and set it in the request headers
-    // of the current-user request.
-    const cookie = signupResponse.get("Set-Cookie");
+    const cookie = await getCookie();
 
     const response = await request(app)
       .get(CURRENTUSER_ROUTE)
