@@ -10,6 +10,7 @@
 ### Tests
 
 - Uses `Jest` as test runner. For `ts` support, uses `ts-jest` library.
+- Look at the `setup.ts` file to understand how Jest has been setup to run.
 
 ## Interesting Patterns/Concepts
 
