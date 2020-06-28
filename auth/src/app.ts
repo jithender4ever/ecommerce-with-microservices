@@ -1,5 +1,6 @@
 import { json } from "body-parser";
 import express from "express";
+import cors from "cors";
 import "express-async-errors";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
@@ -11,6 +12,7 @@ import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 
 const app = express();
+app.use(cors());
 app.set("trust proxy", true);
 app.use(json());
 app.use(
